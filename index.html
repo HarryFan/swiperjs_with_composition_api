@@ -50,13 +50,17 @@
     <script>
         const App = {
             setup() {
+                // 用來存放圖片的陣列
                 const images = Vue.reactive([]);
-
+                // 當元件掛載完成後，才會執行
                 Vue.onMounted(async () => {
+                    // 透過 fetch 取得圖片資料
                     const response = await fetch(
                         "https://run.mocky.io/v3/fe4354a8-0cfb-4de0-9a39-8a2504f996cf");
                     const data = await response.json();
+                    // 將圖片資料放入 images 陣列中
                     images.push(...data);
+                    // 初始化 Swiper
                     const swiper = new Swiper(".swiper", {
                         // 可選的參數
                         loop: true,
@@ -81,6 +85,7 @@
                 });
 
                 return {
+                    // 回傳 images 陣列
                     images,
                 };
             },
