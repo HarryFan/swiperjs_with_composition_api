@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swiper JS & Composition API</title>
+    <script src="https://unpkg.com/vue@3"></script>
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+    <style>
+        .swiper-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .swiper-slide img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Slider 主容器 -->
+    <div id="app">
+        <div class="swiper">
+            <!-- 必須的額外包裝層 -->
+            <div class="swiper-wrapper">
+                <!-- 滑動內容 -->
+                <div v-for="image in images" class="swiper-slide">
+                    <img :src="image.src" alt="">
+                </div>
+            </div>
+            <!-- 如果需要分頁 -->
+            <div class="swiper-pagination"></div>
+            <!-- 如果需要上下頁按鈕 -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+
+            <!-- 如果需要滾動條 -->
+            <div class="swiper-scrollbar"></div>
+        </div>
+    </div>
+    <script>
+        const App = {
+            // 設定資料
+            setup() {
+                const images = [{
+                        src: 'https://picsum.photos/id/1/600/400'
+                    },
+                    {
+                        src: 'https://picsum.photos/id/2/600/400'
+                    },
+                    {
+                        src: 'https://picsum.photos/id/3/600/400'
+                    },
+                    {
+                        src: 'https://picsum.photos/id/4/600/400'
+                    },
+                    {
+                        src: 'https://picsum.photos/id/5/600/400'
+                    },
+                ]
+                return {
+                    images
+                }
+            },
+            // 當元件掛載完成後
+            mounted() {
+                const swiper = new Swiper('.swiper', {
+                    //　選   擇    方    向
+                    direction: 'horizontal',
+                    loop: true, //　循環
+                    slidesPerView: 1, //　一次顯示幾張
+                    spaceBetween: 10, //　間距
+                    centeredSlides: true, //　居中
+                    // 分頁器
+                    pagination: {
+                        el: '.swiper-pagination',
+                    },
+                    //　前後頁按鈕
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+                    //　滾動條
+                    scrollbar: {
+                        el: '.swiper-scrollbar',
+                    },
+                });
+            }
+        }
+
+        // 建立 Vue 實體
+        Vue.createApp(App).mount('#app');
+    </script>
+</body>
+
+</html>
